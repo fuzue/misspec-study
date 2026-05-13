@@ -2,7 +2,9 @@
 
 ## Headline finding
 
-**There is no published study that empirically measures frequentist coverage of confidence or credible intervals for the parameters of microbial growth-curve fits under structural model misspecification.** Adjacent literature exists, but the specific question — "if the true generator is, say, Baranyi-Roberts and we fit Gompertz (or vice-versa), what fraction of the time does a nominal 95% Wald/profile/credible interval cover the true growth rate?" — appears genuinely unanswered.
+**There is no published study that empirically measures frequentist coverage of confidence or credible intervals for the parameters of microbial growth-curve fits under structural model misspecification.**
+
+The two closest existing studies — Simpson et al. (2021, *J. Theor. Biol.*) on profile-likelihood identifiability across sigmoid growth models, and Rockaya & Baranyi (2025, *Food Microbiology*) on SE realism after reparametrization — both assume the deterministic model is correctly specified. **No Monte Carlo coverage study under cross-model misspecification appears in the published literature.** Adjacent literature exists, but the specific question — "if the true generator is, say, Baranyi-Roberts and we fit Gompertz (or vice-versa), what fraction of the time does a nominal 95% Wald/profile/credible interval cover the true growth rate?" — appears genuinely unanswered.
 
 The closest existing work is **Rockaya & Baranyi (2025, *Food Microbiology*, doi:10.1016/j.fm.2025.104726)**, which studies how rescaling/reparametrization of the Baranyi-Roberts model affects the *standard error* of growth-parameter estimates and argues that "the error structure of the BRM-fit is closer to that of linear regression," hence conventional t-distribution CIs are dependable. This is closest in spirit to our work but (i) assumes the model is correctly specified, (ii) does not measure coverage by Monte Carlo simulation, and (iii) does not consider Bayesian credible intervals or PSIS-LOO diagnostics. Our contribution — measuring coverage degradation as a function of structural misspecification severity — is therefore methodologically novel.
 
@@ -25,6 +27,12 @@ This is a clean "unstudied territory" claim, but the surrounding literature is r
 6. **Raue A, Kreutz C, Maiwald T et al. (2009). "Structural and practical identifiability analysis of partially observed dynamical models by exploiting the profile likelihood." *Bioinformatics* 25:1923–1929.** doi:10.1093/bioinformatics/btp358 — 1,323 citations. Standard reference for profile-likelihood identifiability and CI construction in ODE models. Growth curves *are* ODE fits.
 
 7. **Talts S, Betancourt M, Simpson D, Vehtari A, Gelman A (2018). "Validating Bayesian Inference Algorithms with Simulation-Based Calibration." arXiv:1804.06788.** — Canonical SBC paper; the standard way to verify Bayesian CI coverage.
+
+## Closest direct prior art on sigmoid-population coverage
+
+- **Simpson MJ et al. (2021).** *Parameter identifiability and model selection for sigmoid population growth models.* J. Theor. Biol. (bioRxiv 2021.06.22.449499); doi:10.1098/rsif.2021.0143. **73 citations.** Profile-likelihood identifiability across logistic / Gompertz / Richards on the exact model class MisspecStudy targets — but in the **well-specified** case and without cross-model misspecification. Must be engaged directly in the methods section.
+- **Simpson MJ et al. (2024).** *Making Predictions Using Poorly Identified Mathematical Models.* Bull. Math. Biol.; doi:10.1007/s11538-024-01294-0. **15 citations.** Prediction-set construction for weakly identifiable ODE models; same intellectual lineage but focuses on prediction intervals rather than parameter CIs.
+- **Pironet A et al. (2017).** *Practical identifiability analysis of a minimal cardiovascular system model.* Comput. Methods Programs Biomed.; doi:10.1016/j.cmpb.2017.01.005. **33 citations.** ODE-identifiability + parameter-CI methodology, adjacent biological domain.
 
 ## Strong supporting references in adjacent areas
 
