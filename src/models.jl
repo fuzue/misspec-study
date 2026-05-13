@@ -48,12 +48,12 @@ end
 
 Generate one replicate at the given seed. Multiplicative log-normal noise.
 """
-function generate(exp::Experiment, seed::Int)
+function generate(recipe::Experiment, seed::Int)
     rng = MersenneTwister(seed)
-    times = collect(0.0:exp.dt:exp.t_end)
-    clean = exp.truth_func(times, exp.truth_params)
-    observed = clean .* exp.(exp.σ .* randn(rng, length(times)))
-    truth_nt = NamedTuple(Symbol(n) => v for (n, v) in zip(exp.param_names, exp.truth_params))
+    times = collect(0.0:recipe.dt:recipe.t_end)
+    clean = recipe.truth_func(times, recipe.truth_params)
+    observed = clean .* exp.(recipe.σ .* randn(rng, length(times)))
+    truth_nt = NamedTuple(Symbol(n) => v for (n, v) in zip(recipe.param_names, recipe.truth_params))
     return times, observed, truth_nt
 end
 

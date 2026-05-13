@@ -9,6 +9,7 @@ each replicate, build an empirical sampling distribution of the parameters.
 using Kinbiont
 using Random: MersenneTwister
 using Distributions: LogNormal
+using Statistics: std
 
 """
     fit_kinbiont_bootstrap(times, observed, model_name; n_boot=200, rng_seed=42) -> Dict{Symbol,Vector{Float64}}

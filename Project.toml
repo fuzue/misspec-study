@@ -1,7 +1,5 @@
-name = "MisspecStudy"
-uuid = "a2e20a53-fb63-4fdf-a623-eb42d292a71c"
-version = "0.0.1-DEV"
-authors = ["Fuzue Tech", "Edgar Zanella Alvarenga <edgar@fuzue.tech>"]
+# MisspecStudy is a paper repo, not a Julia package — no [name]/[uuid] header.
+# Run scripts with `julia --project=. experiments/NN_*.jl`.
 
 [deps]
 BayesBiont = "e02a378a-91cc-4ed4-9611-5adbfd6a723d"
