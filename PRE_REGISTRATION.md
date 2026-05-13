@@ -1,8 +1,8 @@
 # Pre-registration — MisspecStudy reanalysis
 
-**Status:** Draft, to be **frozen and committed before any Stage 3 reanalysis begins.**
+**Status:** **FROZEN 2026-05-13** at commit `68653a0` after two pilot reanalyses (S01 Pedreira 2022, S02 Alonso-del Valle 2021) informed the operational details below. Stage 3 reanalyses begin against this locked document. Any change after freeze must be a new commit with message starting `pre-reg deviation:` and explicit justification.
 
-The point of this document is to fix the rules *before* we see Stage 3 data. If we change a rule after this is frozen, the change must be a new commit with an explicit deviation note.
+The point of this document is to fix the rules *before* we see Stage 3 data. The two pilots were used to validate that the pipeline runs end-to-end on real public deposits; their results are documented in `pilot/S01_*/verdict.md` and `pilot/S02_*/verdict.md` but did **not** shape the verdict thresholds in §2 below (those are the same as the pre-pilot draft).
 
 ---
 
@@ -62,9 +62,22 @@ For each reanalysed paper:
 - We do not editorialise per paper. The verdict is computed by `pipeline/verdict.jl` from the posterior; the per-paper writeup describes the experimental context and reports the verdict without prose interpretation.
 - Aggregate-level interpretation only appears in the final paper, not in per-paper writeups.
 
-## 5. Deviation log
+## 5. Operational lessons from the two pilots (informational; not a rule change)
+
+Documenting what the pilots taught us so future-me (and reviewers) know what was learned vs. pre-registered:
+
+- **Most papers don't deposit per-replicate traces** — they deposit across-replicate mean + per-timepoint SD or SE. The S01 Pedreira and S02 Alonso-del Valle deposits are both like this. Stage 3 should treat "mean curve + per-timepoint dispersion" as the standard input format and use the dispersion in the observation-noise prior (or accept BayesBiont's default `:lognormal` noise model and let `σ` absorb the per-timepoint variance — pragmatic compromise).
+- **Reproducing the original point estimate within ±10 %** (§1 criterion 4) needs care because many papers use a secondary dose-response or fitness-statistic fit on top of the primary growth-curve fit. We may need to allow the criterion to be applied at the *primary* parameter level (per-curve μ_max / K) rather than the secondary (k_a, fitness, MIC) level. Recording this as an interpretive nuance, not a rule change.
+- **Ragged timepoint counts are common** (S01 Ec had 11 vs 12 points across concentrations). The loader supports ragged input. No rule change.
+- **No-growth conditions** (saturating drug, complete kill) trigger a posterior collapse on `K → 0` and a wide-on-purpose `r` posterior. This is the right behaviour, not a bug; the verdict for such conditions should drop them from secondary fits (per §3 step 6: pareto-k > 0.7 ⇒ diagnostic-fail; we extend the convention to "if `K_mean` < 0.1 × max OD seen elsewhere for the same organism, mark the curve as no-growth and exclude from secondary fits"). This is an *implementation detail*, not a rule change.
+
+## 6. Deviation log
 
 Any change to this document after it is frozen must:
 1. Be a separate commit with message starting `pre-reg deviation:`.
 2. Explain *why* the change is necessary.
 3. Note which papers (if any) would have been affected by the unchanged version.
+
+| Date | Commit | Change | Justification | Papers affected |
+|---|---|---|---|---|
+| (none yet — frozen `68653a0`) | | | | |
