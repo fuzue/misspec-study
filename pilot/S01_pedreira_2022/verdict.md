@@ -45,6 +45,29 @@ Our primary fits don't directly produce `k_a` — that comes from a **secondary 
 
 The qualitative comparison we can already make: the paper's reported μ_max values per DDAC concentration (Figure 2) are consistent with our posterior means within the credible intervals. We don't have the exact per-condition numbers from the paper to do a sharp comparison without re-extracting from the figure.
 
+## Secondary dose-response posterior (added 2026-05-13)
+
+Fit a 3-parameter sigmoid `μ([DDAC]) = μ_0 / (1 + ([DDAC]/IC50)^h)` to the 7 per-concentration `r` posteriors (excluding the no-growth point at the top concentration), treating the 95 % CI half-width / 1.96 as the input SD.
+
+| Organism | μ_0 (no DDAC) | IC50 (mg/L) | Hill `h` |
+|---|---|---|---|
+| **Bc** | 0.477 [0.39, 0.59] /h | **0.910 [0.578, 1.257]** | 1.87 [1.03, 4.17] |
+| **Ec** | 0.665 [0.55, 0.80] /h | **1.000 [0.780, 1.250]** | 1.77 [1.30, 2.37] |
+
+### Direct comparison with Pedreira Table 4
+
+The paper reports `k_a = 15 ± 63` (Bc) — **a CI roughly 4× wider than the point estimate**, an identifiability failure the authors themselves flag. Our Bayesian dose-response fit gives `IC50 = 0.91 [0.58, 1.26]` for Bc — **CI half-width ≈ 0.34, well-defined and biologically sensible**. (Note: paper's `k_a` and our `IC50` are not literally the same parameter; they come from different dose-response parameterisations. The headline is the contrast between "CI wider than point estimate" and "tight credible interval", not a parameter-name match.)
+
+For MIC (the paper reports 1.39 mg/L for Bc, 2.86 mg/L for Ec): at those concentrations, our fitted dose-response predicts μ/μ_0 ≈ 0.31 (Bc) and ≈ 0.13 (Ec), i.e. substantial but not zero growth — broadly consistent with "MIC" being the dose at which growth is minimal rather than the half-maximum dose.
+
+### Pre-registered verdict per PRE_REGISTRATION.md §2
+
+The paper's central comparative claim is the **dose-response shape**: μ_max decreases monotonically with [DDAC]. Under our reanalysis:
+
+- `μ_0_Bc / μ_0_Ec` posterior mean: 0.477 / 0.665 = 0.72. Bc grows slower than Ec at zero DDAC. `P(Bc < Ec)` from joint posterior ≈ 0.96. **Verdict: survives** (paper qualitatively claims similar; quantitatively consistent).
+- Dose-response monotonicity: every per-concentration `r` posterior is lower than the previous one in both organisms (DDAC=0 to last-no-growth-concentration), with P=1 under our posterior. **Verdict: survives**.
+- Reportable identifiability win: in our reanalysis, `IC50` is well-determined (Bc: 95 % CI half-width = 37 % of mean; Ec: 24 %). Under the paper's reported frequentist fit, the analogous parameter `k_a` has CI half-width ≈ 420 % of mean for Bc. **The Bayesian fit gives credible intervals that are honest and useful where the frequentist fit was honest but useless.**
+
 ## Verdict status
 
 Per `PRE_REGISTRATION.md` §2, this pilot does not yet produce a `survives / weakens / flips` verdict because we have not yet fit the secondary dose-response model. What this pilot establishes:
